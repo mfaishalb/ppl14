@@ -60,6 +60,8 @@ jobs:
 
       - name: Run test
         run: python tests/hello_aut.py ${{ env.URL }}
+        env:
+          BROWSER: ${{ matrix.browser }}
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
