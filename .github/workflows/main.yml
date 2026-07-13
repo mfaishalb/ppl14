@@ -5,11 +5,19 @@ on:
     branches:
       - main
 
+
 jobs:
   test:
-    name: Functional Test
+    name: Functional Test (${{ matrix.browser }})
     permissions: write-all
     runs-on: ubuntu-latest
+
+  strategy:
+    matrix:
+      browser:
+        - firefox
+        - chrome
+        - edge
 
     steps:
       - name: Checkout the repo
@@ -33,7 +41,14 @@ jobs:
         run: curl ${{ env.URL }}
 
       - name: Selenium Preparation
-        run: docker run --network=isolated -d -p 4444:4444 -p 7900:7900 -v /dev/shm:/dev/shm --name firefox-standalone selenium/standalone-firefox:latest
+        run: |
+          docker run --network=isolated \
+            -d \
+            -p 4444:4444 \
+            -p 7900:7900 \
+            -v /dev/shm:/dev/shm \
+            --name selenium \
+            selenium/standalone-${{ matrix.browser }}:latest
 
       - name: Wait for Selenium Hub
         run: sh wait.sh
@@ -50,7 +65,7 @@ jobs:
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: Screenshot
+          name: Screenshot-${{ matrix.browser }}
           path: screenshot.png
 
       - name: stop docker
