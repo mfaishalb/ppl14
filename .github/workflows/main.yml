@@ -11,13 +11,12 @@ jobs:
     name: Functional Test (${{ matrix.browser }})
     permissions: write-all
     runs-on: ubuntu-latest
-
-  strategy:
-    matrix:
-      browser:
-        - firefox
-        - chrome
-        - edge
+    strategy:
+      matrix:
+        browser:
+          - firefox
+          - chrome
+          - edge
 
     steps:
       - name: Checkout the repo
