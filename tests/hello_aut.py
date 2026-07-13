@@ -25,5 +25,7 @@ class AutTest(unittest.TestCase):
 
         self.assertIn(expected_result, actual_result.text)
 
+self.browser.save_screenshot("homepage.png")
+
 if __name__ == '__main__':
     unittest.main(argv=['first-arg-is-ignored'], verbosity=2, warnings='ignore')
