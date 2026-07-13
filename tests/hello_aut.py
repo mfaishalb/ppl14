@@ -20,12 +20,11 @@ class AutTest(unittest.TestCase):
             url = "http://localhost"
 
         self.browser.get(url)
+        self.browser.save_screenshot('screenshot.png')
         expected_result = "Welcome back, Guest!"
         actual_result = self.browser.find_element(By.TAG_NAME, 'p')
 
         self.assertIn(expected_result, actual_result.text)
-
-self.browser.save_screenshot("homepage.png")
 
 if __name__ == '__main__':
     unittest.main(argv=['first-arg-is-ignored'], verbosity=2, warnings='ignore')
